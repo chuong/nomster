@@ -1,3 +1,56 @@
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <% i = 0 %>
+    <% @places.each do |place| %>
+      <% if place.photos.present? %>
+          <% if i == 0 %>
+            <% str = ' class="active"' %>
+          <% else %>
+            <% str = '' %>
+          <% end %>
+          <% puts str %>
+          <li data-target="myCarousel" data-slide-to=<%=i%><%= str.html_safe %>></li>
+        <% i = i+1 %>
+      <% end %>
+    <% end %>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <% j = 0 %>
+    <% @places.each do |place| %>
+      <% if place.photos.present? %>
+        <% if j == 0 %>
+          <% str = "active" %>
+        <% else %>
+          <% str = "" %>
+        <% end %>
+        <div class="item <%= str %>">
+        <%= image_tag place.photos.last.picture %>
+        <div class="carousel-caption">
+          <p>
+            <%= place.photos.last.caption %>
+          </p>
+        </div>
+        </div>
+        <% j = j+1 %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
 <% @places.each do |place| %>
   <div class="booyah-box col-xs-10 col-xs-offset-1">
     <h1><%= link_to place.name, place_path(place) %></h1><br />
@@ -6,14 +59,6 @@
 
     <% if place.user.present? %>
       <small><%= place.user.email %></small>
-    <% end %>
-
-    <% if place.photos.present? %>
-      <div class="col-xs-col-12">
-        <%= image_tag place.photos.last.picture %>
-        <br />
-        <%= place.photos.last.caption %>
-      </div>
     <% end %>
 
     <% if place.comments.present? %>
