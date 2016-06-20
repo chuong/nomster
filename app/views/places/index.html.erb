@@ -48,6 +48,15 @@
       <small><%= place.user.email %></small>
     <% end %>
 
+    <% if place.photos.present? %>
+      <div class="col-xs-col-12 carousel-inner">
+        <br />
+        <%= image_tag place.photos.last.picture %>
+        <br />
+        <%= place.photos.last.caption %>
+      </div>
+    <% end %>
+
     <% if place.comments.present? %>
       <div class="col-xs-12">
         <blockquote>
